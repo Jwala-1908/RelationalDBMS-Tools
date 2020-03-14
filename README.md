@@ -1,4 +1,4 @@
-# DBMS-Project-
+# Database Systems Project
 
 
 Database Systems Project (CS F212)<br>
