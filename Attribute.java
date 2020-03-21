@@ -1,7 +1,9 @@
+import java.util.*;
 public class Attribute 
 {
 	Relation parent;
 	String name;
+	String PK;
 	boolean pk;
 	public Attribute(String str, Relation r)
 	{
@@ -12,13 +14,15 @@ public class Attribute
 	}
 	public String toString() 
 	{
-		if (isPrimaryKey())
+		if (isPrimaryKey(String att))
 			return name+"*";
 		return name;
 	}
-	public boolean isPrimaryKey()
+	public boolean isPrimaryKey(String att)
 	{	
-		return pk;
+		if(att.equals(PK))
+		return true;
+		return false;
 	}
 	public static void main(String[] args) 
 	{
