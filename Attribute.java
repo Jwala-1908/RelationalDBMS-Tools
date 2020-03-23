@@ -21,11 +21,7 @@ public class Attribute
 	public boolean isPrimaryKey(String att)
 	{	
 		if(att.equals(PK))
-		return true;
+			return true;
 		return false;
-	}
-	public static void main(String[] args) 
-	{
-
 	}
 }
