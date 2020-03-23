@@ -7,7 +7,7 @@ public class FunDep {
 	Vector<String> X = new Vector<String>();
 	Vector<String> Y = new Vector<String>();
 	public FunDep(String str, Relation rel) {
-		rep = str;
+		rep = str.trim();
 		StringTokenizer st = new StringTokenizer(str,",{}");
 		boolean flag = false;
 		while(st.hasMoreTokens())
@@ -32,7 +32,8 @@ public class FunDep {
 	public FunDep(FunDep f, String y) {
 		this.parent = f.parent;
 		this.rep = "{";
-		for (int i = 0; i < f.X.size(); i++) {
+		for (int i = 0; i < f.X.size(); i++)
+		{
 			this.rep += f.X.elementAt(i);
 			if (i != f.X.size()-1)
 				this.rep += ",";
@@ -72,7 +73,6 @@ public class FunDep {
 		return true;
 	}
 	
-	
 	public static FunDep[] decompose(FunDep f) {
 		int n = f.Y.size();
 		FunDep[] ret = new FunDep[n];
@@ -81,14 +81,12 @@ public class FunDep {
 			return ret;
 		}
 		int k = 0;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
 			ret[k++] = new FunDep(f,f.Y.elementAt(i));
-		}
 		return ret;
 	}
 	
 	public String toString() {
 		return rep;
 	}
-	
 }

@@ -29,9 +29,7 @@ public class Relation {
 	public void toAttribute(Vector<String> vc) {
 		int n = vc.size();
 		for (int i = 0; i < n; i++)
-		{
 			atr_List.add(new Attribute(vc.elementAt(i),this));
-		}
 	}
 	
 	void getFDs() {
@@ -39,18 +37,33 @@ public class Relation {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter number of functional dependencies: ");
 		int n = sc.nextInt();
+		System.out.println("Enter the functional dependencies: ");
 		String str = sc.nextLine();
 		
-		while (n!=0)
-		{
+		while (n!=0){
 			str = sc.nextLine();
 			FunDep fdtemp = new FunDep(str, this);
-			
 			FunDep[] fds = FunDep.decompose(fdtemp);
-			for (int j = 0; j < fds.length; j++)
-			{
-				funcs.add(fds[j]);
+			
+			boolean insert = true;
+			System.out.println(fds.length);
+			for (int j = 0; j < fds.length; j++){
+				insert = false;
+				if (funcs.size() > 0){
+					for(int i = 0; i < funcs.size(); i++)
+						if (!funcs.elementAt(i).toString().equals(fds[j].toString()))
+							insert = true;
+					if (insert)
+						funcs.add(fds[j]);
+				}
+				else {
+					funcs.add(fds[j]);
+					insert = true;
+				}
 			}
+			
+			if (!insert)
+				n++;
 			n--;
 		}
 		
@@ -63,9 +76,7 @@ public class Relation {
 	{
 		int min=500;
 		for(int i=0;i<funcs.size();i++)
-		{
 			min = (min<=funcs.elementAt(i).NF)?min:funcs.elementAt(i).NF;
-		}
 		return min;
 	}
 	/*
