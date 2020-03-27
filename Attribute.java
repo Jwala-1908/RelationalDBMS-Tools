@@ -1,31 +1,30 @@
-import java.util.*;
-public class Attribute 
-{
+
+public class Attribute {
 	Relation parent;
 	String name;
 	String PK;
 	boolean pk;
-	public Attribute(String str, Relation r)
-	{
+	
+	public Attribute(String str, Relation r){
 		parent = r;
 		name = str;
 		pk = false;
-		// TODO Auto-generated constructor stub
 	}
-	public String toString() 
-	{
-		if (isPrimaryKey(String att))
+
+	public String toString() {
+		if (isPrimaryKey("xyz"))
 			return name+"*";
 		return name;
 	}
-	public boolean isPrimaryKey(String att)
-	{	
-		if(att.equals(PK))
-		return true;
-		return false;
+	
+	public boolean isPrimaryKey(String att) {
+		return pk;
 	}
-	public static void main(String[] args) 
-	{
-
-	}
+	
+//	public boolean isPrimaryKey(String att)
+//	{	
+//		if(att.equals(PK))
+//			return true;
+//		return false;
+//	}
 }

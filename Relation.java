@@ -1,84 +1,103 @@
 import java.util.*;
-public class Relation 
-{
-	Scanner sc=new Scanner(System.in);
+
+public class Relation {
+	static int count = 0;
 	Relation parent;
 	String name;
-	public Attribute[] atr_List;
+	public Vector<Attribute> atr_List;
+	public Vector<FunDep> funcs;
 	public Attribute[] prim_key;
-	//let n be the number of dependancies to be entered;
-	public FunDep[] fds;
+	
 	public int NF;
 	// Construct New Relation
-	public Relation(String[] rel,int n)
-	{
-		atr_List = toAttribute(rel);
+	public Relation(String name, Vector<String> vctr) {
+		atr_List = new Vector<Attribute>();
+		toAttribute(vctr);
 		parent = null;
-		name = "DEFAULT";
-		fds=getFDs(n);
-		// TODO Functional Dependencies
-		prim_key = findPK();
+		this.name = name;
+		getFDs();
+//		prim_key = findPK();
 		NF = findNF();
 	}
+	
 	// Construct New Relation with parent relation
-	public Relation(String[] rel, Relation pnt) 
-	{
-		atr_List = toAttribute(rel);
+	public Relation(Vector<String> rel, Relation pnt) {
+		toAttribute(rel);
 		parent = pnt;
 	}
-	Attribute[] toAttribute(String[] rel) 
-	{
-		int n = rel.length;
-		Attribute[] ret = new Attribute[n];
-		for (int i = 0; i < n; i++) 
-		{
-			ret[i] = new Attribute(rel[i], this);
-		}
-		return ret;		
+	
+	public void toAttribute(Vector<String> vc) {
+		int n = vc.size();
+		for (int i = 0; i < n; i++)
+			atr_List.add(new Attribute(vc.elementAt(i),this));
 	}
 	
-	FunDep[] getFDs(int n) 
-	{
-		FunDep ret[] = new FunDep[n];
-		int i=0;
-		while(n>=0)
-		{
-			ret[i].rep=sc.nextLine();
-			i++;
+	void getFDs() {
+		funcs = new Vector<FunDep>();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter number of functional dependencies: ");
+		int n = sc.nextInt();
+		System.out.println("Enter the functional dependencies: ");
+		String str = sc.nextLine();
+		
+		while (n!=0){
+			str = sc.nextLine();
+			FunDep fdtemp = new FunDep(str, this);
+			FunDep[] fds = FunDep.decompose(fdtemp);
+			
+			boolean insert = true;
+			System.out.println(fds.length);
+			for (int j = 0; j < fds.length; j++){
+				insert = false;
+				if (funcs.size() > 0){
+					for(int i = 0; i < funcs.size(); i++)
+						if (!funcs.elementAt(i).toString().equals(fds[j].toString()))
+							insert = true;
+					if (insert)
+						funcs.add(fds[j]);
+				}
+				else {
+					funcs.add(fds[j]);
+					insert = true;
+				}
+			}
+			
+			if (!insert)
+				n++;
 			n--;
 		}
 		
-		return ret;
+		sc.close();
 	}
+	
 	//pass to this function the set of FDs in this relation
 	//and get the minimum NF of the relation
 	private int findNF() 
 	{
-
 		int min=500;
-		for(int i=0;i<fds.length;i++)
-		{
-			min=min<=fds[i].NF ?min: fds[i].NF;
-		}
+		for(int i=0;i<funcs.size();i++)
+			min = (min<=funcs.elementAt(i).NF)?min:funcs.elementAt(i).NF;
 		return min;
-		
 	}
-    
-	private Attribute[] findPK()
-	{
+	/*
+	private Attribute[] findPK() {
 		Attribute ret[] = new Attribute[5];
 		return ret;
 	}
+	*/
+	
 	/*
-	FunDep[] findFDClosure() 
-	{
+	FunDep[] findFDClosure() {
+		
 	}
 	*/
-	public String toString()
-	{
+	
+	public String toString() {
+		Iterator<Attribute> itr = atr_List.iterator();
 		String ret = "Table: " + name + "\n| ";
-		for (Attribute a : atr_List)
-			ret+= a.toString()+" | ";
+		while(itr.hasNext())
+			ret+=itr.next().toString() + " | ";
+
 		return ret;
 	}
 }
