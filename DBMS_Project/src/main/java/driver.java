@@ -12,6 +12,10 @@ public class driver {
     
     public static void main(String[] args)
     {
+       Bucket b = new Bucket(0);
+       b.incDepth0();
+       b.incDepth1();
+       
        
     }
 }
