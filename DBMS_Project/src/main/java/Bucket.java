@@ -19,7 +19,7 @@ import java.util.*;
 public class Bucket {
     
     private char[] bucket;
-    private int depth,bitPattern,remainingSize,numWords,startOfBuffer;
+    private int localDepth,bitPattern,remainingSize,numWords,startOfBuffer;
     private Bucket nextBucket;
     
     
@@ -49,7 +49,7 @@ public class Bucket {
 	public Bucket(int capacity, int newDepth)
 	{
 		this.bucket = new char[capacity];
-		this.depth = newDepth;
+		this.localDepth = newDepth;
 		this.bitPattern = -1;
 		this.remainingSize = capacity;
 		this.numWords = 0;
@@ -67,7 +67,7 @@ public class Bucket {
 	public Bucket(Bucket b)
 	{
 		this.bucket = new char[b.getCapacity()];
-		this.depth = b.getDepth();
+		this.localDepth = b.getDepth();
 		this.bitPattern = b.getBitPattern();
 		this.remainingSize = this.bucket.length;
 		this.numWords = 0;
@@ -95,7 +95,7 @@ public class Bucket {
 	 */
 	public int getDepth()
 	{
-		return this.depth;
+		return this.localDepth;
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public class Bucket {
 	 */
 	public void incDepth0()
 	{
-		this.depth++;
+		this.localDepth++;
 		
 		if (this.bitPattern == -1)
 			this.bitPattern = 0;
@@ -129,7 +129,7 @@ public class Bucket {
 	 */
 	public void incDepth1()
 	{
-		this.depth++;
+		this.localDepth++;
 		
 		if (this.bitPattern == -1)
 			this.bitPattern = 1;
@@ -158,13 +158,13 @@ public class Bucket {
         {
             if(arr.size() >= getDepth())return false;
             
-            this.depth++;
+            this.localDepth++;
             arr.add(value);
             
             return true;
         }
         
-        	/**
+        /**
 	 * Searches for the given key in the bucket.
 	 * 
 	 * @param key The key to search for.
@@ -190,7 +190,7 @@ public class Bucket {
             {
                 int x = arr.get(i);
                 String s2 = Integer.toBinaryString(x);
-                if(s.charAt(this.depth-1)==(s2.charAt(this.depth-1)))
+                if(s.charAt(this.localDepth-1)==(s2.charAt(this.localDepth-1)))
                 {
                     ans.add(x);
                 }
@@ -198,6 +198,15 @@ public class Bucket {
             }
             
             this.arr = ans;
+        }
+        
+        
+        public void print()
+        {
+            for(int i = 0; i < arr.size(); i++)
+            {
+                System.out.print(arr.get(i) + " ");
+            }
         }
         
 

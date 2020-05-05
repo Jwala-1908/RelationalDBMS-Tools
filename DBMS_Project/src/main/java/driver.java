@@ -12,9 +12,19 @@ public class driver {
     
     public static void main(String[] args)
     {
-       Bucket b = new Bucket(0);
-       b.incDepth0();
-       b.incDepth1();
+
+        // new directory with bucket size 3 and global depth 2
+       Directory d = new Directory(3,2);
+       
+       d.insert(1);
+       d.insert(14);
+       d.insert(6);
+       d.insert(4);
+       d.insert(0);
+       d.insert(15);
+       d.insert(13);
+       d.print();
+     
        
        
     }
