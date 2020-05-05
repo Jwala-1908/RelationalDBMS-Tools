@@ -49,7 +49,7 @@ public class Directory
                      
                      b.filter();
                      b2.filter();
-                     directory.add(b2);
+                   //  directory.add(b2);
                      
                      
                      
