@@ -18,7 +18,6 @@ import java.util.*;
 
 public class Bucket {
     
-    private char[] bucket;
     private int localDepth,bitPattern,remainingSize,numWords,startOfBuffer;
     private Bucket nextBucket;
     
@@ -48,9 +47,8 @@ public class Bucket {
 	 */
 	public Bucket(int capacity, int newDepth)
 	{
-		this.bucket = new char[capacity];
 		this.localDepth = newDepth;
-		this.bitPattern = -1;
+		this.bitPattern = 0;
 		this.remainingSize = capacity;
 		this.numWords = 0;
 		this.startOfBuffer = capacity;
@@ -66,34 +64,22 @@ public class Bucket {
 	 */
 	public Bucket(Bucket b)
 	{
-		this.bucket = new char[b.getCapacity()];
-		this.localDepth = b.getDepth();
+		this.localDepth = b.getLocalDepth();
 		this.bitPattern = b.getBitPattern();
-		this.remainingSize = this.bucket.length;
 		this.numWords = 0;
-		this.startOfBuffer = this.bucket.length;
 		this.nextBucket = null;
 		this.arr = b.arr;
 		this.id = Bucket.ID++;
 	}
         
         
-        	/**
-	 * Gets the capacity of the bucket.
-	 * 
-	 * @return the capacity of the bucket.
-	 */
-	public int getCapacity()
-	{
-		return this.bucket.length;
-	}
 	
 	/**
 	 * Gets the depth of the bucket.
 	 * 
 	 * @return the local depth of the bucket.
 	 */
-	public int getDepth()
+	public int getLocalDepth()
 	{
 		return this.localDepth;
 	}
@@ -109,7 +95,10 @@ public class Bucket {
 	}
         
 
-        
+        public int getID()
+        {
+            return this.id;
+        }
         
       	/**
 	 * Increments the depth of the bucket. Appends 0.
@@ -156,9 +145,8 @@ public class Bucket {
         
         public boolean insert(int value)
         {
-            if(arr.size() >= getDepth())return false;
+            if(arr.size() >= getLocalDepth())return false;
             
-            this.localDepth++;
             arr.add(value);
             
             return true;
@@ -200,13 +188,31 @@ public class Bucket {
             this.arr = ans;
         }
         
-        
+
         public void print()
         {
+            System.out.print("Bucket id :" + this.id + " localdepth : " + this.localDepth + " Contents "); 
             for(int i = 0; i < arr.size(); i++)
             {
                 System.out.print(arr.get(i) + " ");
             }
+            
+            System.out.print("BitString " + getBitString() + " ");
+        }
+        
+         public String getBitString()
+        {
+                String bitStr;
+		if (this.bitPattern == -1 || this.localDepth == 0)
+			bitStr = "_";
+		else
+			bitStr = String.format("%"+this.localDepth+"s", Integer.toBinaryString(this.bitPattern));
+		bitStr = bitStr.replace(' ', '0');  
+                
+                StringBuilder input1 = new StringBuilder(); 
+                input1.append(bitStr);
+                input1 = input1.reverse(); 
+                return input1.toString();
         }
         
 

@@ -87,4 +87,6 @@ public class BitUtility
 	{
 		return !BitUtility.endsWith0(value);
 	}
+        
+
 }
