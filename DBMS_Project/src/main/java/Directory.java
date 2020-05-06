@@ -14,7 +14,7 @@ public class Directory
         private final int k = 10;
         private final int bucketSize;
 	private int globalDepth;
-        private  ArrayList<Bucket> buckets = new ArrayList();
+        private  ArrayList<Bucket> buckets;
 
         
         /**
@@ -24,6 +24,7 @@ public class Directory
 	 */
         public Directory(int bucketSize,int globalDepth)
 	{
+        this.buckets = new ArrayList();
 		this.index = new HashMap<>();
 		this.globalDepth = globalDepth;
                 this.bucketSize = bucketSize;  
@@ -296,7 +297,7 @@ public class Directory
               StringBuilder sb = new StringBuilder();
 
                    
-                 sb.append("Global Depth: " + this.globalDepth + "\n");
+                 sb.append("Global Depth: ").append(this.globalDepth).append("\n");
                   
                   
                   
@@ -308,7 +309,7 @@ public class Directory
                 for(int i = 0; i < len; i++)
                 {
                     System.out.print(i + "=[" );
-                     sb.append(String.valueOf(i) + "=[");
+                     sb.append(String.valueOf(i)).append("=[");
                     if(index.get(i) !=-1)
                     {
                         sb.append(buckets.get(index.get(i)).print());

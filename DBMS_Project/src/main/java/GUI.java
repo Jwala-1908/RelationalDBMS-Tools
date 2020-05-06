@@ -196,6 +196,7 @@ public class GUI extends javax.swing.JFrame {
                 d.insert(value);
 
 
+                ArrayList<Bucket> buckets = d.getBuckets();
                 
                 HashMap<Integer,Integer> index = d.getIndex();
                 
@@ -211,9 +212,10 @@ public class GUI extends javax.swing.JFrame {
                   str = sb.toString();
                   
                    table.setValueAt((Object)(str),i,0);
-                   Bucket b = d.findbucket(i);
-                    if(b != null)
+                   
+                    if(index.get(i) != -1)
                     {
+                        Bucket b = buckets.get(index.get(i));
                         table.setValueAt((Object)(b.id),i,1);
                         table.setValueAt((Object)(b.getLocalDepth()),i,2);
                         table.setValueAt((Object)(b.print()),i,3);
