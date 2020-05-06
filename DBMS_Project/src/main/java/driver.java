@@ -23,6 +23,7 @@ public class driver {
        d.insert(86);
        d.insert(54);
        d.insert(35);
+       
        d.print();
 //       
 
