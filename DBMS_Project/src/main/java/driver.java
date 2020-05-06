@@ -11,21 +11,23 @@
 public class driver {
     
     public static void main(String[] args)
-    {
-
-        // new directory with bucket size 3 and global depth 2
-       Directory d = new Directory(3,2);
+    { 
+        // new directory with bucket size 3 and global depth 3
+       Directory d = new Directory(3,3);  
+       d.insert(32);
+       d.insert(28);
+       d.insert(43);
+      d.insert(15);
+    d.insert(66);
+       d.insert(27);
+       d.insert(86);
+       d.insert(54);
+       d.insert(35);
+       d.insert(98);
+       d.insert(72);
        
-       d.insert(1);
-       d.insert(14);
-       d.insert(6);
-       d.insert(4);
-       d.insert(0);
-       d.insert(15);
-       d.insert(13);
-       d.print();
-     
-       
+     d.print();
+      
        
     }
 }
