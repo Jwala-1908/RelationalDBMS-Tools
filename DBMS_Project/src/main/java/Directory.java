@@ -34,7 +34,6 @@ public class Directory
                     index.put(i,-1);
                     // -1 indicates that the directory points to no bucket currently
                 }
-                
 
 	}
         
@@ -106,11 +105,16 @@ public class Directory
                            if(buckets.get(i) == b)buckets.set(i,newbucket);
                        }
                    }
-                   else
+                   else if(b.getLocalDepth() + 1 <= globalDepth)
                    {
                        
                        split(b,value);
                        
+                   }
+                   else
+                   {
+                      expand();
+                      split(b,value);
                    }
              }
              
@@ -232,7 +236,44 @@ public class Directory
                 
         public void expand()
         {
-            this.globalDepth++;
+            System.out.println("Expanding Directory: ");
+            
+            //this.globalDepth++;
+           HashMap<Integer,Integer> newindex = new HashMap();
+           
+            int len = (int) Math.pow(2, (this.globalDepth+1));
+            
+          //  System.out.println(buckets.size());
+            
+           for(int i = 0; i < buckets.size(); i++)
+           {
+               Bucket b = buckets.get(i);
+               //System.out.println(b.getBitString());
+               for(int j = 0; j < len; j++)
+               {
+                String str = Integer.toBinaryString(BitUtility.getRightMostBits(j,b.getLocalDepth()));
+                 StringBuilder sb = new StringBuilder();
+
+                   for (int toPrepend=b.getLocalDepth()-str.length(); toPrepend>0; toPrepend--)sb.append('0');
+                   
+                 sb.append(str);
+                  str = sb.toString();
+                  
+                 // System.out.println(b.getBitString() + "  "  + str);
+                  if(b.getBitString().equals(str))
+                  {
+                      newindex.put(j,b.id);
+                  }
+               }
+               
+              
+           }
+           
+           this.globalDepth++;
+           index = newindex;
+           
+           
+            
             
         }
          /*
@@ -256,6 +297,9 @@ public class Directory
                     }
                     System.out.println("]");
                 }
+                
+                
+ 
                 
 	}
          

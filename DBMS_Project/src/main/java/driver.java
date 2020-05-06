@@ -12,8 +12,8 @@ public class driver {
     
     public static void main(String[] args)
     { 
-        // new directory with bucket size 3 and global depth 3
-       Directory d = new Directory(3,3);  
+        // new directory with bucket size 3 and global depth 2
+       Directory d = new Directory(3,2);  
        d.insert(32);
        d.insert(28);
        d.insert(43);
@@ -25,9 +25,9 @@ public class driver {
        d.insert(35);
        d.insert(98);
        d.insert(72);
-       
+//       
      d.print();
-      
+
        
     }
 }
