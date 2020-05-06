@@ -206,6 +206,9 @@ public class Bucket {
                 return str;
         }
         
+        
+        
+        
          public String getBitString()
         {
                 String bitStr;
