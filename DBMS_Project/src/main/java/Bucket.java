@@ -196,7 +196,7 @@ public class Bucket {
             //System.out.print("Bucket id :" + this.id + " localdepth : " + this.localDepth + " Contents "); 
             for(int i = 0; i < arr.size(); i++)
             {
-              // System.out.print(arr.get(i) + " ");
+              System.out.print(arr.get(i) + " ");
                 sb.append(arr.get(i)).append(" ");
             }
             

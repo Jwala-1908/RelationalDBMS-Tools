@@ -21,7 +21,8 @@ public class driver {
        d.insert(66);
        d.insert(27);
        d.insert(86);
-
+       d.insert(54);
+       d.insert(35);
        d.print();
 //       
 
