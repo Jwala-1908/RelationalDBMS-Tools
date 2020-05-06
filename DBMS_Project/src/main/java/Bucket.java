@@ -189,15 +189,22 @@ public class Bucket {
         }
         
 
-        public void print()
+        public String print()
         {
-            System.out.print("Bucket id :" + this.id + " localdepth : " + this.localDepth + " Contents "); 
+             StringBuilder sb = new StringBuilder();
+            // sb.append("Bucket id :").append(this.id).append(" localdepth : ").append(this.localDepth).append(" Contents ");
+             
+            //System.out.print("Bucket id :" + this.id + " localdepth : " + this.localDepth + " Contents "); 
             for(int i = 0; i < arr.size(); i++)
             {
-                System.out.print(arr.get(i) + " ");
+               System.out.print(arr.get(i) + " ");
+                sb.append(arr.get(i)).append(" ");
             }
             
-            System.out.print("BitString " + getBitString() + " ");
+            //System.out.print("BitString " + getBitString() + " ");
+            String str;
+        str = sb.toString();
+                return str;
         }
         
          public String getBitString()

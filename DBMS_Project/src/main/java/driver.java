@@ -18,15 +18,12 @@ public class driver {
        d.insert(28);
        d.insert(43);
       d.insert(15);
-    d.insert(66);
+       d.insert(66);
        d.insert(27);
        d.insert(86);
-       d.insert(54);
-       d.insert(35);
-       d.insert(98);
-       d.insert(72);
+
+       d.print();
 //       
-     d.print();
 
        
     }

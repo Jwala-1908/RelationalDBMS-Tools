@@ -14,7 +14,7 @@ public class Directory
         private final int k = 10;
         private final int bucketSize;
 	private int globalDepth;
-        private ArrayList<Bucket> buckets = new ArrayList();
+        private  ArrayList<Bucket> buckets = new ArrayList();
 
         
         /**
@@ -46,7 +46,15 @@ public class Directory
 	{
 		return this.index.size();
 	}
+        public HashMap<Integer,Integer> getIndex()
+        {
+            return this.index;
+        }
         
+        public ArrayList<Bucket> getBuckets()
+        {
+            return this.buckets;
+        }
         public void insert(int value)
         {
 
@@ -71,6 +79,7 @@ public class Directory
                     buckets.add(b);
 
                     index.put(key, b.getID());
+                   
                  }
                  else
                  {
@@ -84,7 +93,6 @@ public class Directory
                      {
                          b.arr.add(value);
                          index.put(key,b.getID());
-                         return;
                      }
                   
                  }
@@ -109,12 +117,14 @@ public class Directory
                    {
                        
                        split(b,value);
+                        
                        
                    }
                    else
                    {
                       expand();
                       split(b,value);
+                       
                    }
              }
              
@@ -187,8 +197,9 @@ public class Directory
                      index.put(i,b1.id);
                  }
              }
-            insert(value);
+           
              
+             insert(value);
           // System.out.println(b.getBitPattern() + " " + BitUtility.getRightMostBits(1,b.getLocalDepth()));
            //  System.out.println(b1.getBitPattern());
            //  
@@ -279,9 +290,16 @@ public class Directory
          /*
 	 * Prints the contents of directory
 	 */
-         public void print()
+         public String print()
 	{
             
+              StringBuilder sb = new StringBuilder();
+
+                   
+                 sb.append("Global Depth: " + this.globalDepth + "\n");
+                  
+                  
+                  
                 System.out.println("Printing the Directory");
 		System.out.println("Global Depth: " + this.globalDepth);
                 
@@ -290,16 +308,19 @@ public class Directory
                 for(int i = 0; i < len; i++)
                 {
                     System.out.print(i + "=[" );
-
+                     sb.append(String.valueOf(i) + "=[");
                     if(index.get(i) !=-1)
                     {
-                        buckets.get(index.get(i)).print();
+                        sb.append(buckets.get(index.get(i)).print());
+                        
                     }
                     System.out.println("]");
+                    sb.append("]\n");
                 }
                 
                 
- 
+                String str = sb.toString();
+                return str;
                 
 	}
          
