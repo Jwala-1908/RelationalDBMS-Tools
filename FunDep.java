@@ -1,39 +1,81 @@
-import java.util.*;
+package dbms_proj;
 
-public class FunDep {
-	public int NF;
-	public Relation parent;
+import java.util.*;
+//import exceptions.InvalidAttributeException;
+
+public class FunDep implements Cloneable{
+	public int NF = 1;
+	public Relation pnt;
 	String rep;
 	Vector<String> X = new Vector<String>();
 	Vector<String> Y = new Vector<String>();
-	public FunDep(String str, Relation rel) {
+	
+	// 
+	public FunDep(String str) throws InvalidAttributeException {
 		rep = str.trim();
 		StringTokenizer st = new StringTokenizer(str,",{}");
 		boolean flag = false;
-		while(st.hasMoreTokens())
-		{
+		while(st.hasMoreTokens()){
 			String temp = st.nextToken();
-			if (temp.equals("->"))
-			{
+			if (temp.equals("->")){
 				flag = true;
 				continue;
 			}
 			if (!flag) {
-				X.add(temp);
+				if (pnt.atr_List.contains(temp))
+					X.add(temp);
+				else
+					throw new InvalidAttributeException(temp);	
 			}
 			else {
-				Y.add(temp);
+				if (pnt.atr_List.contains(temp))
+					Y.add(temp);
+				else
+					throw new InvalidAttributeException(temp);
+			}
+		}
+	}
+	
+	public FunDep(String str, Relation rel) throws InvalidAttributeException {
+		pnt = rel;
+		rep = str.trim();
+		StringTokenizer st = new StringTokenizer(str,",{}");
+		boolean flag = false;
+		while(st.hasMoreTokens()){
+			String temp = st.nextToken();
+			if (temp.equals("->")){
+				flag = true;
+				continue;
+			}
+			if (!flag) {
+				if (pnt.atr_List.contains(temp))
+					X.add(temp);
+				else
+					throw new InvalidAttributeException(temp);	
+			}
+			else {
+				if (pnt.atr_List.contains(temp))
+					Y.add(temp);
+				else
+					throw new InvalidAttributeException(temp);
 			}
 		}
 		// to extract attributes and work with them,
 		// tokenize "{A,B} -> {C,D,E}" (str) with delimiters ',' , '{', and '}' 
-		NF = findNF();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public FunDep(FunDep fd) {
+		this.pnt = null;
+		this.X = (Vector<String>)fd.X.clone();
+		this.Y = (Vector<String>)fd.Y.clone();
+		this.rep = fd.rep;
+	}
+
 	public FunDep(FunDep f, String y) {
-		this.parent = f.parent;
+		this.pnt = f.pnt;
 		this.rep = "{";
-		for (int i = 0; i < f.X.size(); i++)
-		{
+		for (int i = 0; i < f.X.size(); i++){
 			this.rep += f.X.elementAt(i);
 			if (i != f.X.size()-1)
 				this.rep += ",";
@@ -47,30 +89,71 @@ public class FunDep {
 	//	returns 1 if relation is in the first normal form (1NF) 
 	//	returns 2 if relation is in the second normal form (2NF)
 	//	returns 3 if relation is in the third normal form (3NF)
-	//	returns 0 if relation is in the Boyce-Codd normal form (BCNF)
+	//	returns 4 if relation is in the Boyce-Codd normal form (BCNF)
 	public int findNF() {
-		if (checkBCNF()) return 0;
-		if (check3NF()) return 3;
-		if (check2NF()) return 2;
-		return 1;
+//		System.out.println(pnt.cand_Keys);
+		if (check2NF()) {
+			if (check3NF()) {
+				if (checkBCNF())
+					return 4;
+				else
+					return 3;
+			}
+			else {
+				return 2;
+			}
+		}
+		else
+			return 1;
 	}
 	
 	//Check if a relation is in the second normal form (2NF)
-	boolean check2NF()
-	{
+	// A table R is in 2NF if for every non-trivial FD A->b, either A is not a proper subset of any candidate
+	// key, or b is a key attribute.
+	boolean check2NF(){
+		if (pnt.keyAttr.contains(Y.elementAt(0)))
+			return true;
+		for (Vector<String> ck : pnt.cand_Keys) {
+			Vector<Vector<String>> subs = pnt.alg.getSubsets(ck);
+			for (Vector<String> subset : subs) {
+				if (X.size() == subset.size()) {
+					if (X.containsAll(subset))
+						return false;
+				}
+			}
+		}
 		return true;
 	}
 	
+	
+	
 	//Check if a relation is in the third normal form (3NF)
-	boolean check3NF()
-	{
-		return true;
+//	Satisfies 2 NF &
+//	no non-key attribute of R is transitively dependent on any candidate key
+	boolean check3NF() {
+		int n = pnt.all_Keys.size();
+		boolean flag = false;
+		for (int i = 0; i < n; i++)
+			if (pnt.all_Keys.elementAt(i).containsAll(X) && X.containsAll(pnt.all_Keys.elementAt(i))) {
+				flag = true;
+				break;
+			}
+		
+		if (flag)
+			return true;
+		if (pnt.keyAttr.contains(Y.elementAt(0)))
+			return true;
+		
+		return false;
 	}
 
 	//Check if a relation is in Boyce-Codd normal form (BCNF)
-	boolean checkBCNF()
-	{
-		return true;
+	boolean checkBCNF(){
+		for (Vector<String> supkey : pnt.all_Keys) {
+			if (X.size() == supkey.size() && X.containsAll(supkey))
+				return true;
+		}
+		return false;
 	}
 	
 	public static FunDep[] decompose(FunDep f) {
@@ -88,5 +171,9 @@ public class FunDep {
 	
 	public String toString() {
 		return rep;
+	}
+	
+	public int compare(FunDep b) {
+		return Integer.compare(this.X.size(), b.X.size());
 	}
 }

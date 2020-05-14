@@ -1,0 +1,51 @@
+	// Printing Functional Dependencies
+//		System.out.println("\nThe atomic functional dependencies are:");
+//		for (FunDep fd : rel.funcs)
+//			System.out.println(fd + " NF: " + fd.NF);
+//		sc.close();
+		
+//		System.out.println(rel.alg.getSubsets(rel.prim_key));
+//		System.out.println(rel.alg.decomp2NF());
+		
+//		try {
+//			Relation x = (Relation)rel.clone();
+//			int fdsize = x.funcs.size();
+//			x.funcs.remove(fdsize-1);
+//			x.tempPrintFD();
+//			System.out.println("__________________");
+//			rel.tempPrintFD();
+//		} catch (CloneNotSupportedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		//Closure test
+//		Vector<String> test = new Vector<String>(rel.funcs.elementAt(0).X);
+//		System.out.println();
+//		System.out.println(rel.closure(test));
+		
+		// All Keys test
+//		System.out.println(rel.getKeys());
+//		System.out.println();
+		
+		// Primary Key
+		System.out.println("Primary Key: " + rel.prim_key);
+//		System.out.println("All Keys:\n" + rel.all_Keys);
+//		System.out.println("Candidate Keys:\n" + rel.cand_Keys);
+		
+		// Decompose2NF test
+//		if (rel.NF == 4)
+//			System.out.println("The relation " + rel.name + " is in BCNF");
+//		else
+//			System.out.println("The relation " + rel.name + " is in " + rel.NF + "NF");
+//		System.out.println("KEY: " + rel.prim_key);
+//		
+//		System.out.println("The original relation " + rel.name + " is in " + rel.NF + "NF");
+//		System.out.println("_______________");
+//		System.out.println("Decomposed into:");
+//		Vector<Relation> dcmp = rel.alg.decomp2NF();
+//		for (Relation rlt : dcmp) {
+//			System.out.println(rlt);
+//			System.out.println(rlt.funcs);
+//		}
+		//////////////////////////////
