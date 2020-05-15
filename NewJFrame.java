@@ -31,9 +31,10 @@ public class NewJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public NewJFrame() {
-        //this.setBackground(Color.BLACK);
-        this.setTitle("Normalization Solver");
+        this.setTitle("Normalization Solver: Module 1");
+        getContentPane().setBackground(Color.BLACK);
         initComponents();
+        PANDU.setEditable(false);
     }
 
     /**
@@ -46,11 +47,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         button6 = new java.awt.Button();
-        jLabel1 = new javax.swing.JLabel();
         Decompose = new java.awt.Button();
         button3 = new java.awt.Button();
         button4 = new java.awt.Button();
-        result_Here = new java.awt.TextArea();
+        PANDU = new java.awt.TextArea();
         Fds = new java.awt.TextField();
         label1 = new java.awt.Label();
         Attr = new java.awt.TextField();
@@ -58,6 +58,11 @@ public class NewJFrame extends javax.swing.JFrame {
         NameRe = new java.awt.TextField();
         ShowAllKeys = new java.awt.Button();
         rest = new java.awt.Button();
+        label3 = new java.awt.Label();
+        button1 = new java.awt.Button();
+        button2 = new java.awt.Button();
+        button5 = new java.awt.Button();
+        result_Here = new java.awt.TextArea();
 
         button6.setBackground(new java.awt.Color(204, 204, 204));
         button6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -67,10 +72,6 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(new java.awt.Color(51, 51, 51));
-
-        jLabel1.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setText("Attributes :");
 
         Decompose.setActionCommand("Decompose");
         Decompose.setBackground(new java.awt.Color(204, 204, 204));
@@ -97,20 +98,26 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         button4.setBackground(new java.awt.Color(204, 204, 204));
-        button4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        button4.setLabel("About");
+        button4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        button4.setLabel("About Team");
         button4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button4ActionPerformed(evt);
             }
         });
 
-        result_Here.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        PANDU.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
+        Fds.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        label1.setAlignment(java.awt.Label.CENTER);
+        label1.setBackground(new java.awt.Color(102, 102, 102));
         label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        label1.setForeground(new java.awt.Color(255, 255, 255));
         label1.setText("FD's :");
 
+        Attr.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         Attr.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AttrMouseClicked(evt);
@@ -127,13 +134,23 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        label2.setAlignment(java.awt.Label.CENTER);
+        label2.setBackground(new java.awt.Color(102, 102, 102));
         label2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        label2.setForeground(new java.awt.Color(255, 255, 255));
         label2.setText("Name of Relation :");
+
+        NameRe.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        NameRe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NameReActionPerformed(evt);
+            }
+        });
 
         ShowAllKeys.setBackground(new java.awt.Color(204, 204, 204));
         ShowAllKeys.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        ShowAllKeys.setLabel("Solve");
+        ShowAllKeys.setLabel("Print Relation");
         ShowAllKeys.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ShowAllKeysActionPerformed(evt);
@@ -149,117 +166,129 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        label3.setAlignment(java.awt.Label.CENTER);
+        label3.setBackground(new java.awt.Color(102, 102, 102));
+        label3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        label3.setForeground(new java.awt.Color(255, 255, 255));
+        label3.setText("Attributes :");
+
+        button1.setActionCommand("c1");
+        button1.setBackground(new java.awt.Color(204, 204, 204));
+        button1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        button1.setLabel("Clear");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
+        button2.setActionCommand("c2");
+        button2.setBackground(new java.awt.Color(204, 204, 204));
+        button2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        button2.setLabel("Clear");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+
+        button5.setActionCommand("c3");
+        button5.setBackground(new java.awt.Color(204, 204, 204));
+        button5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        button5.setLabel("Clear");
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(3, 3, 3))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(26, 26, 26)))
+                    .addComponent(Attr, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Fds, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ShowAllKeys, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(Decompose, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                            .addComponent(rest, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(33, 33, 33)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(NameRe, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addGap(159, 159, 159)
-                        .addComponent(button4, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                    .addComponent(NameRe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Attr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Fds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(result_Here, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(126, 126, 126))
+                        .addGap(53, 53, 53)
+                        .addComponent(result_Here, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ShowAllKeys, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(128, 128, 128)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Decompose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99)
+                        .addComponent(rest, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PANDU, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NameRe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Attr, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(Fds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(52, 52, 52)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ShowAllKeys, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(Decompose, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(rest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(result_Here, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(button4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(44, 44, 44))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(NameRe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Attr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button5, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(Fds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ShowAllKeys, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(Decompose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(result_Here, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                    .addComponent(PANDU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(49, 49, 49))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AttrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AttrMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_AttrMouseClicked
 
-    private void DecomposeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DecomposeActionPerformed
-
-        // TODO add your handling code here:
-        name=NameRe.getText();
-        attributes=Attr.getText();
-        fds=Fds.getText();
-        if(!checkValid(name,attributes,fds))
-            result_Here.setText("Error!Please Enter All Values First.");
-        else if(hua_kya==0)
-            result_Here.setText("First click on solve");
-        else
-        {
-            r.decomposeRel();
-            int siz=r.decomposed.size();
-            String answer="";
-            for(int i=0;i<siz;i++)
-            {
-                if(i!=0)
-                    answer+="\n";
-                answer+=r.decomposed.elementAt(i);
-            }
-            result_Here.setText(answer);
-            //Decompose.setEnabled(false);
-        }
-    }//GEN-LAST:event_DecomposeActionPerformed
-
-    private void DecomposeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DecomposeMouseClicked
-
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DecomposeMouseClicked
-
-    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        //new Help().setVisible(true);
-        new Intructions().showFrame();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button3ActionPerformed
-
     private void AttrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AttrActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_AttrActionPerformed
 
     public Boolean checkValid(String name,String attr,String fd)
@@ -268,13 +297,98 @@ public class NewJFrame extends javax.swing.JFrame {
             return false;
         return true;
     }
+    private void AttrFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_AttrFocusGained
+    }//GEN-LAST:event_AttrFocusGained
+
+    private void restActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restActionPerformed
+        String yee=PANDU.getText();
+        PANDU.setText("");
+        name=NameRe.getText().toUpperCase();
+        attributes=Attr.getText().toUpperCase();
+        fds=Fds.getText().toUpperCase();
+        String noo=result_Here.getText();
+        result_Here.setText("");
+        NameRe.setText("");
+        Attr.setText("");
+        Fds.setText("");
+        hua_kya=0;
+        Relation.cnt=0;
+    }//GEN-LAST:event_restActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+       name=NameRe.getText().toUpperCase();
+       NameRe.setText("");
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        attributes=Attr.getText().toUpperCase();
+        Attr.setText("");
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        fds=Fds.getText().toUpperCase();
+        Fds.setText("");
+    }//GEN-LAST:event_button5ActionPerformed
+
+    private void DecomposeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DecomposeActionPerformed
+
+        name=NameRe.getText();
+        attributes=Attr.getText();
+        fds=Fds.getText();
+        if(!checkValid(name,attributes,fds))
+            PANDU.setText("Error!Please Enter All Values First.");
+        else
+        {
+            ShowAllKeysActionPerformed(evt);
+            if(r!=null)
+            {
+                if(r.NF==4)
+                {
+                    PANDU.setText("Relation is already in BCNF.");
+                    hua_kya=0;
+                }
+                else
+                {
+                    r.decomposeRel();
+                    int siz=r.decomposed.size();
+                    String answer="";
+                    for(int i=0;i<siz;i++)
+                    {
+                        if(i!=0)
+                        answer+="\n";
+                        answer+=r.decomposed.elementAt(i);
+                        answer+="*******************************";
+                    }
+                    PANDU.setText(answer);
+                    hua_kya=0;
+                }
+            }
+        }
+    }//GEN-LAST:event_DecomposeActionPerformed
+
+    private void DecomposeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DecomposeMouseClicked
+
+    }//GEN-LAST:event_DecomposeMouseClicked
+
+    private void NameReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameReActionPerformed
+    }//GEN-LAST:event_NameReActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+        new Abouts().showFrame();
+    }//GEN-LAST:event_button4ActionPerformed
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        new Intructions().showFrame();
+    }//GEN-LAST:event_button3ActionPerformed
+
     private void ShowAllKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowAllKeysActionPerformed
-        
+        String hi=PANDU.getText();
+        PANDU.setText("");
         name=NameRe.getText().toUpperCase();
         attributes=Attr.getText().toUpperCase();
         fds=Fds.getText().toUpperCase();
         if(!checkValid(name,attributes,fds))
-            result_Here.setText("Error!Please Enter All Values First.");
+        result_Here.setText("Error!Please Enter All Values First.");
         else
         {
             boolean flag=false;
@@ -304,38 +418,19 @@ public class NewJFrame extends javax.swing.JFrame {
                     result_Here.setText(r.toString());
                 }
                 catch (InvalidAttributeException iae) {
-                    result_Here.setText("Please re-enter the proper functional dependency and continue:");
+                    result_Here.setText("Please re-enter the proper functional dependency and continue.");
                     Fds.setText("");
-                    break;
-                } 
-                catch(InvalidFunctionalDependencyException ifde) {
-                    Fds.setText("");
-                    result_Here.setText("Please re-enter the proper functional dependency and continue:");
                     break;
                 }
-                
+                catch(InvalidFunctionalDependencyException ifde) {
+                    Fds.setText("");
+                    result_Here.setText("Please re-enter the proper functional dependency and continue.");
+                    break;
+                }
+
             }
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_ShowAllKeysActionPerformed
-
-    private void AttrFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_AttrFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AttrFocusGained
-
-    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
-        new Abouts().showFrame();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button4ActionPerformed
-
-    private void restActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restActionPerformed
-        // TODO add your handling code here:
-        NameRe.setText("");
-        Attr.setText("");
-        Fds.setText("");
-        result_Here.setText("");
-        Decompose.setEnabled(true);
-    }//GEN-LAST:event_restActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,13 +472,17 @@ public class NewJFrame extends javax.swing.JFrame {
     private java.awt.Button Decompose;
     private java.awt.TextField Fds;
     private java.awt.TextField NameRe;
+    private java.awt.TextArea PANDU;
     private java.awt.Button ShowAllKeys;
+    private java.awt.Button button1;
+    private java.awt.Button button2;
     private java.awt.Button button3;
     private java.awt.Button button4;
+    private java.awt.Button button5;
     private java.awt.Button button6;
-    private javax.swing.JLabel jLabel1;
     private java.awt.Label label1;
     private java.awt.Label label2;
+    private java.awt.Label label3;
     private java.awt.Button rest;
     private java.awt.TextArea result_Here;
     // End of variables declaration//GEN-END:variables

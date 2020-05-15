@@ -1,7 +1,6 @@
 package dbms_proj;
 
 import java.util.*;
-//import exceptions.*;
 
 public class Relation {
 	public static String RName = "Relation";
@@ -18,43 +17,14 @@ public class Relation {
 	public Vector<Relation> decomposed;
 	public int NF = 1;
 	
-	// Construct New Relation
-//	public Relation() {
-//		Scanner sc = new Scanner(System.in);
-//		name = getName(sc);
-//		atr_List = new Vector<String>();
-//		getAttr(sc);
-//		RName = name;
-//		boolean fd_exist = getFDs(sc);
-//		if (fd_exist)
-//			fd_exist = checkTriv();
-//		if (fd_exist) {
-//			alg = new AlgoPack(this);
-//			fillIn(this);
-////			System.out.println("Candidate_Keys:\n" + cand_Keys);
-//			NF = findNF();
-//			tempPrintFD();
-//			if (NF != 4) {
-////				if (askDecompose(sc)) {
-//					decomposeRel();
-////				}
-//			}
-//			else {
-//				decomposed = new Vector<Relation>();
-//				decomposed.add(this);
-//				System.out.println("The relation is already in BCNF");
-//			}
-//			cnt++;
-//		}
-//		else
-//			zeroFD(this);
-//		sc.close();
-//	}
 	
+	
+	// Relation constructor with list of attributes
 	@SuppressWarnings("unchecked")
 	public Relation(String nm, Vector<String> attr) {
 		name = nm;
 		atr_List = attr;
+		alg = new AlgoPack(this);
 		prim_key = (Vector<String>)attr.clone();
 		funcs = new Vector<FunDep>();
 		all_Keys = new Vector<Vector<String>>();
@@ -63,6 +33,7 @@ public class Relation {
 		cand_Keys.add(attr);
 	}
 	
+	// Relation constructor with single fd
 	public Relation (String nm, FunDep fd){
 		name = nm;
 		atr_List = new Vector<String>();
@@ -106,6 +77,7 @@ public class Relation {
 		else
 			zeroFD(this);
         }
+	// Relation constructor to create new instance of a relation with smae properties as an existing relation r
 	@SuppressWarnings("unchecked")
 	public Relation(Relation r) {
 		this.name = r.name;
@@ -115,6 +87,7 @@ public class Relation {
 		NF = findNF();
 	}
 	
+	// Relation constructor with list of attributes and list of functional dependencies.
 	public Relation(String name, Vector<String> vctr, Vector<FunDep> fds) {
 		this.name = name;
 		atr_List = vctr;
@@ -127,17 +100,8 @@ public class Relation {
 		}
 		cnt++;
 	}
-
-//	public Relation(String name, Vector<String> vctr, FunDep fds) {
-//		atr_List = vctr;
-//		this.name = name;
-//		funcs = new Vector<FunDep>();
-//		fds.pnt = this;
-//		funcs.add(fds);
-//		Relation.fillIn(this);
-//		NF = findNF();
-//	}
 	
+	// Remove any FD that contains the RHS element in the LHS as well
 	public boolean checkTriv() {
 		for (int i = 0; i < funcs.size(); i++) {
 			FunDep fd = funcs.elementAt(i);
@@ -149,7 +113,26 @@ public class Relation {
 			return true;
 		return false;
 	}
-        boolean getGuiFds(Vector<String> fdsi) throws InvalidAttributeException,InvalidFunctionalDependencyException 
+	
+	// if a relation has all the attributes as in the original relation,
+	// check all other relations and the attributes they contain
+	// if all attributes occur elsewhere, remove this relation entirely
+	// if all attributes do not occur elsewhere, remove one of those which occur.
+	@SuppressWarnings("unchecked")
+	public Vector<String> breakFullSet(Vector<Relation> inpt, int x) {
+		// x marks the index of the relation in inpt which has all original attributes
+		Vector<String> atrs = (Vector<String>)inpt.elementAt(x).atr_List.clone();
+		for (int i = 0; i < inpt.size(); i++) {
+			if (i == x)
+				continue;
+			atrs.removeAll(inpt.elementAt(i).atr_List);
+			if (atrs.size() == 0) {
+				break;
+			}
+		}
+		return atrs;
+	}
+	boolean getGuiFds(Vector<String> fdsi) throws InvalidAttributeException,InvalidFunctionalDependencyException 
         {
             int n=fdsi.size(),balu=0;
             if(n==0)
@@ -160,7 +143,7 @@ public class Relation {
 			str=fdsi.elementAt(balu++);
                         str = str.toUpperCase();
 			//try {
-				StringTokenizer strtok = new StringTokenizer(str,"->");
+				StringTokenizer strtok = new StringTokenizer(str,"{}->");
 				if (strtok.countTokens()!=2) {
 					throw new InvalidFunctionalDependencyException(str);
 				}
@@ -184,38 +167,35 @@ public class Relation {
 				}
 				if (!insert)
 					n++;
-				//n--;
-			//} catch (InvalidAttributeException iae) {
-			//	System.out.println(iae);
-			//	System.out.println("Please re-enter the proper functional dependency and continue:");
-			//	continue;
-			//} catch(InvalidFunctionalDependencyException ifde) {
-			//	System.out.println(ifde);
-			//	System.out.println("Please re-enter the proper functional dependency and continue:");
-			//	continue;
-			//}
+				
 		}
             return true;
         }
-	boolean askDecompose(Scanner sc) {
-		if (NF == 4)
-		System.out.println("The relation is in " + NF + "NF.");
-		System.out.println("Would you like to decompose the relation to "  + (NF+1) + "NF? Y/N:");
-		String ans = sc.next().toUpperCase();
-		if (ans.equals("Y"))
-			return true;
-		else if (ans.equals("N"))
-			return false;
-		System.out.println("Invalid response. Answer only as 'Y' or 'N'");
-		return askDecompose(sc);
-	}
-	
+	// adjusts for relations from decomposed that:
+	// - have all the attributes as the original relation
+	// - have not been decomposed into higher NF
 	public void filterRelations(Vector<Relation> inpt) {
-//		for (int i = 0; i < inpt.size(); i++){
-//			Relation r = inpt.elementAt(i);
-//			if (r.atr_List.containsAll(this.atr_List))
-//				inpt.remove(i--);				
-//		}
+//		boolean flag = false;
+		for (int i = 0; i < inpt.size(); i++){
+			Relation r = inpt.elementAt(i);
+			if (r.atr_List.containsAll(this.atr_List)){
+				Vector<String> keepAtrs = breakFullSet(inpt, i);
+				if (keepAtrs.size() == 0)
+					inpt.remove(i--);
+				else {
+					for (int j = r.atr_List.size()-1; j >= 0; j--) {
+						String s = r.atr_List.elementAt(j);
+						if (!keepAtrs.contains(s)) {
+							r.atr_List.remove(s);
+							break;
+						}
+					}
+				}
+			}
+			if (r.funcs.size() != 0)
+				r.funcs = r.alg.checkFDAttrs(r.atr_List, r.funcs);
+		}
+				
 		Vector<FunDep> fdRemove = new Vector<FunDep>();
 		for (int i = 0; i < inpt.size(); i++) {
 			Relation r = inpt.elementAt(i);
@@ -243,6 +223,7 @@ public class Relation {
 			r.NF = r.findNF();
 		}
 	}
+
 	public Vector<Relation> breakRelations(Relation inpt, int nf) {
 		Vector<Relation> ret = new Vector<Relation>();
 		Vector<FunDep> fdRemove = new Vector<FunDep>();
@@ -278,6 +259,8 @@ public class Relation {
 		return ret;
 	}
 	
+	// checks if the decomposed relations satisfy the required NF
+	// if not, the relations are adjusted
 	public void checkRelations(Vector<Relation> inpt, int nf) {
 		Vector<Relation> newrels = new Vector<Relation>();
 		for (int i = 0; i < inpt.size(); i++) {
@@ -300,6 +283,7 @@ public class Relation {
 		}
 		inpt.removeAll(relRemove);
 	}
+	
 	
 	public void decomposeRel() {
 		if (NF == 1) {
@@ -460,17 +444,28 @@ public class Relation {
 	}
 	
 	public String toString() {
-		String ret = "Table: " + name + "\n| ";
-		for(int i = 0; i < atr_List.size(); i++)
-			ret += atr_List.elementAt(i) + " | ";
-		
-		if (NF == 4) {
-			ret += "\nThe relation " + name + " is in BCNF\n";
+		String ret = "Table: " + name +"  "; 
+                if (NF == 4) {
+			ret += "(BCNF)\n";
 		}
 		else
-			ret += "\nThe relation " + name + " is in " + NF + "NF\n";
-		ret += "Primary Key: " + prim_key + "\n";
-                ret +="Candidate Keys:"+"\n"+ cand_Keys +"\n";
+			ret += "("+NF + "NF)\n";
+                ret+= "| ";
+		for(int i = 0; i < atr_List.size(); i++)
+			ret += atr_List.elementAt(i) + " | ";
+                ret+="\n";
+                ret += "Primary Key: " + prim_key + "\n";
+                ret +="Candidate Keys: "+ cand_Keys +"\n";
+                if(funcs.size()>0)
+                {
+                    ret +="Functional Dependencies:\n";
+                    for(FunDep fd:funcs)
+                    ret+=fd+"\n";
+                }
+                else
+                {
+                    ret+="No Functional Dependencies.\n";
+                }
 		return ret;
 	}
 	

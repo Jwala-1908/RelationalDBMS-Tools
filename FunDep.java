@@ -1,7 +1,6 @@
 package dbms_proj;
 
 import java.util.*;
-//import exceptions.InvalidAttributeException;
 
 public class FunDep implements Cloneable{
 	public int NF = 1;
@@ -9,32 +8,6 @@ public class FunDep implements Cloneable{
 	String rep;
 	Vector<String> X = new Vector<String>();
 	Vector<String> Y = new Vector<String>();
-	
-	// 
-	public FunDep(String str) throws InvalidAttributeException {
-		rep = str.trim();
-		StringTokenizer st = new StringTokenizer(str,",{}");
-		boolean flag = false;
-		while(st.hasMoreTokens()){
-			String temp = st.nextToken();
-			if (temp.equals("->")){
-				flag = true;
-				continue;
-			}
-			if (!flag) {
-				if (pnt.atr_List.contains(temp))
-					X.add(temp);
-				else
-					throw new InvalidAttributeException(temp);	
-			}
-			else {
-				if (pnt.atr_List.contains(temp))
-					Y.add(temp);
-				else
-					throw new InvalidAttributeException(temp);
-			}
-		}
-	}
 	
 	public FunDep(String str, Relation rel) throws InvalidAttributeException {
 		pnt = rel;
@@ -61,7 +34,7 @@ public class FunDep implements Cloneable{
 			}
 		}
 		// to extract attributes and work with them,
-		// tokenize "{A,B} -> {C,D,E}" (str) with delimiters ',' , '{', and '}' 
+		// tokenize "{A,B} -> {C,D,E}" (str) with delimiters ',' , '{', and '}'
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -91,7 +64,6 @@ public class FunDep implements Cloneable{
 	//	returns 3 if relation is in the third normal form (3NF)
 	//	returns 4 if relation is in the Boyce-Codd normal form (BCNF)
 	public int findNF() {
-//		System.out.println(pnt.cand_Keys);
 		if (check2NF()) {
 			if (check3NF()) {
 				if (checkBCNF())
@@ -170,6 +142,8 @@ public class FunDep implements Cloneable{
 	}
 	
 	public String toString() {
+		rep = X.toString();
+		rep += "->" + Y.toString();
 		return rep;
 	}
 	

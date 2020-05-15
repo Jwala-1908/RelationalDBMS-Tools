@@ -77,7 +77,8 @@ public class AlgoPack {
 			FunDep fd = fdrem.elementAt(i);
 			for (String a : rltn.keyAttr) {
 				if (fd.X.contains(a)) {
-					atrs.add(fd.Y.elementAt(0));
+					if(!atrs.contains(fd.Y.elementAt(0)))
+						atrs.add(fd.Y.elementAt(0));
 					break;
 				}
 			}
@@ -123,6 +124,7 @@ public class AlgoPack {
 				ret.lastElement().NF = ret.lastElement().findNF();
 			}
 		}
+		checkAllAttributes(ret);
 		
 		return ret;
 	}
@@ -158,8 +160,35 @@ public class AlgoPack {
 		}
 	}
 	
-	// Decomposes function from 1NF to 2NF
+	// checks if all attributes have been assigned to some relation
+	// if any attributes have been left out, any of the candidate keys can be made a relation
+	@SuppressWarnings("unchecked")
+	public void checkAllAttributes(Vector<Relation> inpt) {
+		Vector<String> attr = new Vector<String>();
+		for(Relation r : inpt) {
+			for (String a : r.atr_List) {
+				if (!attr.contains(a)) {
+					attr.add(a);
+				}
+			}
+		}
+		if (rltn.atr_List.size()==attr.size()) {
+			return;
+		}
+		Vector<String> attrExc = (Vector<String>)rltn.atr_List.clone();
+		attrExc.removeAll(attr);
+		String relname = Relation.RName + "_" + (++Relation.cnt);
+		if (rltn.prim_key.containsAll(attrExc))
+			inpt.add(new Relation(relname, rltn.prim_key));
+		else {
+			attrExc.addAll(rltn.prim_key);
+			inpt.add(new Relation(relname,attrExc));
+		}
+		Relation.fillIn(inpt.lastElement());
+		inpt.lastElement().NF = inpt.lastElement().findNF();
+	}
 	
+	// Decomposes function from 1NF to 2NF
 	@SuppressWarnings("unchecked")
 	public Vector<Relation> decomp2NF(){
 		System.out.println(rltn.cand_Keys);
@@ -185,6 +214,7 @@ public class AlgoPack {
 						FunDep fdNew = new FunDep(fd);
 						fdNew.pnt = r;
 						r.funcs.add(fdNew);
+						// removes from original fds those which contain proper subsets of the X of FDs already inserted 
 						funcsFilter(r, fdList, fdRemove);
 						fdRemove.add(fd);
 						for (FunDep fdx : fdList) {
@@ -213,6 +243,7 @@ public class AlgoPack {
 			FunDep fdNew = new FunDep(fd);
 			Relation r = new Relation(relname,fdNew);
 			fdNew.pnt = r;
+			fdRemove.add(fd);
 			ret.add(r);
 			for (FunDep fdx : fdList) {
 				if (fdRemove.contains(fdx))
@@ -227,13 +258,14 @@ public class AlgoPack {
 				}
 			}
 		}
+		
+		checkAllAttributes(ret);
 
 		for (Relation r : ret) {
 			r.alg = new AlgoPack(r);
 			Relation.fillIn(r);
 			r.NF = r.findNF();
 		}
-		
 		return ret;
 	}
 	
@@ -321,13 +353,13 @@ public class AlgoPack {
 	}
 	
 	// Finds closure of vector of input attributes
-	public Vector<String> closure(Vector<String> inpt){
+	public Vector<String> closure(Vector<String> inpt, Vector<FunDep> fds){
 		Vector<String> clsr = new Vector<String>(inpt);
 		Vector<String> oldC;
 		boolean flag = true;
 		do {
 			oldC = new Vector<String>(clsr);
-			for (FunDep fd : rltn.funcs){
+			for (FunDep fd : fds){
 				flag = true;
 				for (String at : fd.X) {
 					if (!clsr.contains(at)) {
@@ -335,7 +367,7 @@ public class AlgoPack {
 						break;
 					}
 				}
-				if (flag){
+				if (fd.X.size()>0 && flag){
 					if (!clsr.contains(fd.Y.elementAt(0)))
 						clsr.add(fd.Y.elementAt(0));
 				}
@@ -366,7 +398,7 @@ public class AlgoPack {
 			str = K.elementAt(i);
 			ind = i;
 			K.remove(str);
-			temp = closure(K);
+			temp = closure(K,rltn.funcs);
 			if (temp.size() == N) {
 				pks.add(0,new Vector<String>(K));
 				keyDo(pks.elementAt(0), pks, N);

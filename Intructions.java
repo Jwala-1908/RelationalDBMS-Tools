@@ -14,10 +14,12 @@ public class Intructions extends JPanel {
 
     private void initializeUI() {
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(445, 300));
+        this.setPreferredSize(new Dimension(460, 310));
 
         JTextArea textArea = new JTextArea(10, 40);
-        textArea.setText("\"Attributes\"\n" +"    Format: attribute names separated by comma.\n" +"    Examples:\n" +"	name, location, favAppl, appl, provider\n" +"	A,B,C,D,E\n" +"\n" +"\"FD's\"\n" +"    Format:\n" +"	Attribute names separated by comma and contained in {}.\n" +"	FD's separated by semicolon.\n" +"    Examples:\n" +"	{name}-->{location,favAppl}; {appl}-->{provider} \n" +"	{A}-->{B,C}; {C,D}-->{E}; {E}-->{A}; {B}-->{D}\n" +"\n" +"*White spaces are auto-ignored.\n" +"*Everything is case-sensitive.");
+        String intra="\"Attributes\"\n" +"    Format: attribute names separated by comma.\n" +"    Examples:\n" +"	name,location,favAppl,appl,provider\n" +"	A,B,C,D,E\n" +"\n" +"\"FD's\"\n" +"    Format:\n" +"	Attribute names separated by comma and contained in { }.\n" +"	FD's separated by semicolon.\n" +"    Examples:\n" +"	{name}-->{location,favAppl};{appl}-->{provider} \n" +"	{A}-->{B,C};{C,D}-->{E};{E}-->{A};{B}-->{D}\n";
+        intra+="\nClick on Print Relation to view the entered Relation."+"\nClick on Decompose to view the decomposed relations."+"\nClick on Restart to clear session."+"\n\n*Case-Insensitive.*";
+        textArea.setText(intra);
 
         // By default the JTextArea is editable, calling
         // setEditable(false) produce uneditable JTextArea.
