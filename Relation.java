@@ -52,6 +52,7 @@ public class Relation {
         {
             funcs=new Vector<FunDep>();
             name=nj.name;
+            RName=name;
             atr_List=nj.attri;
             boolean check=getGuiFds(nj.fun);
             if(check==true)
