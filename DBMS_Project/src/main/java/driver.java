@@ -8,34 +8,7 @@
  *
  * @author Radhesh Sarma
  */
-class utility
 
-{
-    static int p = 1000000007;
-    static int power(int x, int y) 
-    { 
-        if (x == 0) return 0;  
-        // Initialize result 
-        int res = 1;      
-       x = (x % p + p) % p;
-        while (y > 0) 
-        { 
-            if((y & 1)==1) 
-                res = (res * x) % p; 
-            y = y >> 1;  
-            x = (x * x) % p;  
-        } 
-        return res; 
-    }
-    
-    static int hash(int val)
-    {
-        val += Math.random()%p + 1;
-        val %= p;
-        
-      return power(val, (int) (Math.random()%p + 1));
-    }
-}
 public class driver {
     
     public static void main(String[] args)

@@ -60,14 +60,14 @@ public class Directory
         {
 
             
-             int key = BitUtility.getRightMostBits(Utility.hash(value), this.globalDepth);
+             int key = BitUtility.getRightMostBits(value%k, this.globalDepth);
              
              if(index.get(key) == -1)
              {
                  if(findbucket(key) == null)
                  {
                   Bucket b = new Bucket(bucketSize);
-                    if(BitUtility.endsWith0(Utility.hash(value)))
+                    if(BitUtility.endsWith0(value%k))
                     {
                          b.incDepth0();
                     }
@@ -224,9 +224,9 @@ public class Directory
              for(int i = 0; i < b.arr.size(); i++)
              {
                  int value = b.arr.get(i);
-                 //int key = BitUtility.getRightMostBits(Utility.hash(value), this.globalDepth);
+                 //int key = BitUtility.getRightMostBits(value%k, this.globalDepth);
                  
-                 String str = Integer.toBinaryString(BitUtility.getRightMostBits(Utility.hash(value),b.getLocalDepth()));
+                 String str = Integer.toBinaryString(BitUtility.getRightMostBits(value%k,b.getLocalDepth()));
                  StringBuilder sb = new StringBuilder();
 
                    for (int toPrepend=b.getLocalDepth()-str.length(); toPrepend>0; toPrepend--)  sb.append('0');

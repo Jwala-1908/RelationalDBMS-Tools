@@ -256,8 +256,9 @@ public class GUI extends javax.swing.JFrame {
             return;
         }
         
-        if(d1 == false & !ok)
+        if(!(d1 == false & !ok))
         {
+        } else {
             JOptionPane.showMessageDialog(null, "Enter Global Depth");
             b1=false;
             d1=false;
