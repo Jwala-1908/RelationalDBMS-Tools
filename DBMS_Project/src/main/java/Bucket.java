@@ -18,7 +18,6 @@ import java.util.*;
 public class Bucket {
     
     private int localDepth,bitPattern,remainingSize,numWords,startOfBuffer;
-    private Bucket nextBucket;
     
     
     private static int ID;
@@ -51,8 +50,7 @@ public class Bucket {
 		this.remainingSize = capacity;
 		this.numWords = 0;
 		this.startOfBuffer = capacity;
-		this.nextBucket = null;
-                arr = new ArrayList<Integer>();
+                arr = new ArrayList<>();
 		this.id = Bucket.ID++;
 	}
         
@@ -66,7 +64,6 @@ public class Bucket {
 		this.localDepth = b.getLocalDepth();
 		this.bitPattern = b.getBitPattern();
 		this.numWords = 0;
-		this.nextBucket = null;
 		this.arr = b.arr;
 		this.id = Bucket.ID++;
 	}

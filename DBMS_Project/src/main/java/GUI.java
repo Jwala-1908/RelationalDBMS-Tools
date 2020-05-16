@@ -29,6 +29,7 @@ public class GUI extends javax.swing.JFrame {
        Object[] cname={"Directory Number","Bucket ID","Local Depth" ,"Content of Bucket pointed by it",};
             DefaultTableModel model=new DefaultTableModel(cname,16);
             table.setModel(model);
+            
     }
 
     /**
@@ -106,7 +107,7 @@ public class GUI extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -249,8 +250,20 @@ public class GUI extends javax.swing.JFrame {
             d=new Directory(bfr,globaldepth);
             b1=false;
             d1=false;
+            return;
         }
         
+        if(b1 == false)
+        {
+            JOptionPane.showMessageDialog(null, "Enter BFR");
+            return;
+        }
+        
+        if(d1 == false)
+        {
+            JOptionPane.showMessageDialog(null, "Enter Global Depth");
+            return;
+        }
         try
         {
                  value = Integer.parseInt(user_input.getText());
@@ -324,15 +337,28 @@ public class GUI extends javax.swing.JFrame {
 
     private void gd_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gd_inputActionPerformed
         // TODO add your handling code here:
+          try
+        {
         globaldepth = Integer.parseInt(global_depth.getText());
         d1=true;
+        }
+      catch( NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Enter an integer");
+        }
+          
 //d = new Directory(3,val);
     }//GEN-LAST:event_gd_inputActionPerformed
 
     private void BFRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BFRActionPerformed
         // TODO add your handling code here:
-        bfr = Integer.parseInt(global_depth.getText());
+                  try
+        {
+        bfr = Integer.parseInt(bfr_input.getText());
         b1=true;
+        }
+       catch( NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Enter an integer");
+        }
 //d = new Directory(val,gd);
     }//GEN-LAST:event_BFRActionPerformed
 

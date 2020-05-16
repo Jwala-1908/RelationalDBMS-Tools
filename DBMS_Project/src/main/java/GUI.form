@@ -216,7 +216,7 @@
                   <Table columnCount="4" rowCount="1">
                     <Column editable="false" title="Directory Number" type="java.lang.String"/>
                     <Column editable="false" title="Bucket ID" type="java.lang.String"/>
-                    <Column editable="true" title="Local Depth" type="java.lang.String"/>
+                    <Column editable="false" title="Local Depth" type="java.lang.String"/>
                     <Column editable="false" title="Content of Bucket pointed by it" type="java.lang.String"/>
                   </Table>
                 </Property>
