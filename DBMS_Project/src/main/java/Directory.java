@@ -11,7 +11,7 @@ import java.util.*;
 public class Directory
 {
         private HashMap<Integer,Integer> index;
-        private final int k = 10;
+        private final int k = 17;
         private final int bucketSize;
 	private int globalDepth;
         private  ArrayList<Bucket> buckets;
