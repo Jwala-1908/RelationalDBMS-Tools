@@ -14,7 +14,7 @@ public class Directory
         private final int k = 17;
         private final int bucketSize;
 	private int globalDepth;
-        private  ArrayList<Bucket> buckets;
+        private final  ArrayList<Bucket> buckets;
 
         
         /**
@@ -60,14 +60,14 @@ public class Directory
         {
 
             
-             int key = BitUtility.getRightMostBits(value%k, this.globalDepth);
+             int key = BitUtility.getRightMostBits(Utility.hash(value), this.globalDepth);
              
              if(index.get(key) == -1)
              {
                  if(findbucket(key) == null)
                  {
                   Bucket b = new Bucket(bucketSize);
-                    if(BitUtility.endsWith0(value%k))
+                    if(BitUtility.endsWith0(Utility.hash(value)))
                     {
                          b.incDepth0();
                     }
@@ -224,9 +224,9 @@ public class Directory
              for(int i = 0; i < b.arr.size(); i++)
              {
                  int value = b.arr.get(i);
-                 //int key = BitUtility.getRightMostBits(value%k, this.globalDepth);
+                 //int key = BitUtility.getRightMostBits(Utility.hash(value), this.globalDepth);
                  
-                 String str = Integer.toBinaryString(BitUtility.getRightMostBits(value%k,b.getLocalDepth()));
+                 String str = Integer.toBinaryString(BitUtility.getRightMostBits(Utility.hash(value),b.getLocalDepth()));
                  StringBuilder sb = new StringBuilder();
 
                    for (int toPrepend=b.getLocalDepth()-str.length(); toPrepend>0; toPrepend--)  sb.append('0');

@@ -242,28 +242,37 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    boolean ok = false;
+    
     private void InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertActionPerformed
         
-        int value;
-        if(b1&d1)
+   
+           int value;
+       if(b1 == false & !ok)
         {
-            d=new Directory(bfr,globaldepth);
+            JOptionPane.showMessageDialog(null, "Enter BFR");
             b1=false;
             d1=false;
             return;
         }
         
-        if(b1 == false)
+        if(d1 == false & !ok)
         {
-            JOptionPane.showMessageDialog(null, "Enter BFR");
+            JOptionPane.showMessageDialog(null, "Enter Global Depth");
+            b1=false;
+            d1=false;
             return;
         }
         
-        if(d1 == false)
+        if(b1&d1 & (!ok))
         {
-            JOptionPane.showMessageDialog(null, "Enter Global Depth");
-            return;
+            d=new Directory(bfr,globaldepth);
+            ok = true;
+            b1=false;
+            d1=false;
         }
+        
+
         try
         {
                  value = Integer.parseInt(user_input.getText());
@@ -351,7 +360,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void BFRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BFRActionPerformed
         // TODO add your handling code here:
-                  try
+        try
         {
         bfr = Integer.parseInt(bfr_input.getText());
         b1=true;
