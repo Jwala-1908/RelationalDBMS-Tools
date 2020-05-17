@@ -11,7 +11,7 @@ import java.util.*;
 public class Directory
 {
         private HashMap<Integer,Integer> index;
-        private final int k = 17;
+        private final int k = 15;
         private final int bucketSize;
 	private int globalDepth;
         private final  ArrayList<Bucket> buckets;
@@ -84,7 +84,7 @@ public class Directory
                  }
                  else
                  {
-                     System.out.println(value);
+                     //System.out.println(value);
                              
             
                      Bucket b = findbucket(key);
@@ -301,21 +301,21 @@ public class Directory
                   
                   
                   
-                System.out.println("Printing the Directory");
-		System.out.println("Global Depth: " + this.globalDepth);
+//                System.out.println("Printing the Directory");
+//		System.out.println("Global Depth: " + this.globalDepth);
                 
                 int len = (int) Math.pow(2, this.globalDepth);
                 
                 for(int i = 0; i < len; i++)
                 {
-                    System.out.print(i + "=[" );
+                   // System.out.print(i + "=[" );
                      sb.append(String.valueOf(i)).append("=[");
                     if(index.get(i) !=-1)
                     {
                         sb.append(buckets.get(index.get(i)).print());
                         
                     }
-                    System.out.println("]");
+                   // System.out.println("]");
                     sb.append("]\n");
                 }
                 
@@ -325,6 +325,33 @@ public class Directory
                 
 	}
          
+
+         public String search(int val)
+         {
+             String ans;
+             
+              int len = (int) Math.pow(2, this.globalDepth);
+              
+              for(int i = 0; i < len; i++)
+              {
+                  if(index.get(i) !=-1)
+                    {
+ 
+                            Bucket b = buckets.get(index.get(i));
+                            
+                            for(int j = 0; j < b.arr.size(); j++)
+                            {
+                                if(b.arr.get(j) == val)
+                                {
+                                    ans = "FOUND \n Bucket id :" + b.id + "\nlocaldepth : " + b.getLocalDepth();
+                               return ans;
+                                }
+                            }    
+                    }
+              }
+              
+              return "NOT FOUND";
+         }
   
        
         

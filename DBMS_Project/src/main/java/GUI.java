@@ -22,13 +22,16 @@ public class GUI extends javax.swing.JFrame {
     Directory d;
     int globaldepth,bfr;
     boolean b1=false,d1=false;
-    
+  HashSet<Integer> store = new HashSet<Integer>(); 
     public GUI() {
         initComponents();
-         this.setExtendedState(MAXIMIZED_BOTH);
+         //this.setExtendedState(MAXIMIZED_BOTH);
+         setSize(1100,850);
+         
        Object[] cname={"Directory Number","Bucket ID","Local Depth" ,"Content of Bucket pointed by it",};
             DefaultTableModel model=new DefaultTableModel(cname,16);
             table.setModel(model);
+             
             
     }
 
@@ -44,7 +47,7 @@ public class GUI extends javax.swing.JFrame {
         userinput = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Insert = new javax.swing.JButton();
-        user_input = new javax.swing.JTextField();
+        search_box_text = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -52,19 +55,26 @@ public class GUI extends javax.swing.JFrame {
         gd_input = new javax.swing.JButton();
         BFR = new javax.swing.JButton();
         bfr_input = new javax.swing.JTextField();
+        searchbutton = new javax.swing.JButton();
+        user_input1 = new javax.swing.JTextField();
+        clear1 = new javax.swing.JButton();
+        clear2 = new javax.swing.JButton();
+        clear4 = new javax.swing.JButton();
+        clear3 = new javax.swing.JButton();
+        Restart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        userinput.setBackground(java.awt.Color.black);
+        userinput.setBackground(new java.awt.Color(36, 47, 65));
         userinput.setPreferredSize(new java.awt.Dimension(2000, 1200));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(java.awt.Color.white);
-        jLabel1.setText("We Assume initital BFR = 3, hash function as k%17");
+        jLabel1.setText("Hash function is k%15");
 
-        Insert.setBackground(java.awt.Color.darkGray);
-        Insert.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        Insert.setForeground(java.awt.Color.white);
+        Insert.setBackground(new java.awt.Color(97, 212, 195));
+        Insert.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Insert.setForeground(new java.awt.Color(36, 47, 65));
         Insert.setText("Insert");
         Insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,29 +82,29 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        user_input.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        user_input.setToolTipText("");
-        user_input.addFocusListener(new java.awt.event.FocusAdapter() {
+        search_box_text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        search_box_text.setToolTipText("");
+        search_box_text.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                user_inputFocusGained(evt);
+                search_box_textFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                user_inputFocusLost(evt);
+                search_box_textFocusLost(evt);
             }
         });
-        user_input.addActionListener(new java.awt.event.ActionListener() {
+        search_box_text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                user_inputActionPerformed(evt);
+                search_box_textActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel2.setForeground(java.awt.Color.white);
-        jLabel2.setText("DBMS MODULE 2");
+        jLabel2.setText("Extendible Hashing");
 
-        table.setBackground(java.awt.Color.darkGray);
-        table.setFont(new java.awt.Font("Caviar Dreams", 1, 20)); // NOI18N
-        table.setForeground(java.awt.Color.white);
+        table.setBackground(new java.awt.Color(97, 212, 195));
+        table.setFont(new java.awt.Font("Caviar Dreams", 1, 18)); // NOI18N
+        table.setForeground(new java.awt.Color(36, 47, 65));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -118,6 +128,7 @@ public class GUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.setColumnSelectionAllowed(true);
         table.setEnabled(false);
         table.setGridColor(java.awt.Color.black);
         table.setRowHeight(30);
@@ -127,15 +138,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(3).setResizable(false);
-        }
+        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         global_depth.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
-        gd_input.setBackground(java.awt.Color.darkGray);
-        gd_input.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        gd_input.setForeground(new java.awt.Color(255, 255, 255));
+        gd_input.setBackground(new java.awt.Color(97, 212, 195));
+        gd_input.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        gd_input.setForeground(new java.awt.Color(36, 47, 65));
         gd_input.setText("Enter GD");
         gd_input.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,9 +152,9 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        BFR.setBackground(java.awt.Color.darkGray);
-        BFR.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        BFR.setForeground(new java.awt.Color(255, 255, 255));
+        BFR.setBackground(new java.awt.Color(97, 212, 195));
+        BFR.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        BFR.setForeground(new java.awt.Color(36, 47, 65));
         BFR.setText("Enter BFR");
         BFR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,71 +164,159 @@ public class GUI extends javax.swing.JFrame {
 
         bfr_input.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
+        searchbutton.setBackground(new java.awt.Color(97, 212, 195));
+        searchbutton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        searchbutton.setForeground(new java.awt.Color(36, 47, 65));
+        searchbutton.setText("Search");
+        searchbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchbuttonActionPerformed(evt);
+            }
+        });
+
+        user_input1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        user_input1.setToolTipText("");
+        user_input1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                user_input1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                user_input1FocusLost(evt);
+            }
+        });
+        user_input1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                user_input1ActionPerformed(evt);
+            }
+        });
+
+        clear1.setBackground(new java.awt.Color(97, 212, 195));
+        clear1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        clear1.setForeground(new java.awt.Color(36, 47, 65));
+        clear1.setText("Clear");
+        clear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear1ActionPerformed(evt);
+            }
+        });
+
+        clear2.setBackground(new java.awt.Color(97, 212, 195));
+        clear2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        clear2.setForeground(new java.awt.Color(36, 47, 65));
+        clear2.setText("Clear");
+        clear2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear2ActionPerformed(evt);
+            }
+        });
+
+        clear4.setBackground(new java.awt.Color(97, 212, 195));
+        clear4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        clear4.setForeground(new java.awt.Color(36, 47, 65));
+        clear4.setText("Clear");
+        clear4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear4ActionPerformed(evt);
+            }
+        });
+
+        clear3.setBackground(new java.awt.Color(97, 212, 195));
+        clear3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        clear3.setForeground(new java.awt.Color(36, 47, 65));
+        clear3.setText("Clear");
+        clear3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear3ActionPerformed(evt);
+            }
+        });
+
+        Restart.setBackground(new java.awt.Color(97, 212, 195));
+        Restart.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Restart.setForeground(new java.awt.Color(36, 47, 65));
+        Restart.setText("Restart");
+        Restart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestartActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout userinputLayout = new javax.swing.GroupLayout(userinput);
         userinput.setLayout(userinputLayout);
         userinputLayout.setHorizontalGroup(
             userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userinputLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1932, Short.MAX_VALUE)
                     .addGroup(userinputLayout.createSequentialGroup()
-                        .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userinputLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(288, 288, 288))
-                            .addGroup(userinputLayout.createSequentialGroup()
-                                .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49)
-                                .addComponent(user_input, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(171, 171, 171)))
-                        .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(BFR, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                            .addComponent(gd_input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane1))
+                    .addGroup(userinputLayout.createSequentialGroup()
+                        .addGap(82, 82, 82)
                         .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(userinputLayout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(global_depth, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userinputLayout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(bfr_input, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(85, 85, 85))
-            .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(userinputLayout.createSequentialGroup()
-                    .addGap(93, 93, 93)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(1373, Short.MAX_VALUE)))
+                                .addComponent(BFR, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(122, 122, 122)
+                                .addComponent(bfr_input, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(clear2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(userinputLayout.createSequentialGroup()
+                                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(userinputLayout.createSequentialGroup()
+                                        .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(searchbutton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(gd_input, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Insert, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(122, 122, 122)
+                                        .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(global_depth, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(user_input1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(search_box_text, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(48, 48, 48)
+                                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(clear1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(clear3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(clear4, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 78, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userinputLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(325, 325, 325))
         );
         userinputLayout.setVerticalGroup(
             userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userinputLayout.createSequentialGroup()
-                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(userinputLayout.createSequentialGroup()
-                        .addGap(185, 185, 185)
-                        .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(gd_input, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(userinputLayout.createSequentialGroup()
-                        .addGap(206, 206, 206)
-                        .addComponent(global_depth, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Insert)
-                        .addComponent(user_input, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(bfr_input, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(userinputLayout.createSequentialGroup()
-                        .addComponent(BFR, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)))
-                .addGap(108, 108, 108)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(371, Short.MAX_VALUE))
-            .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(userinputLayout.createSequentialGroup()
-                    .addGap(68, 68, 68)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(1035, Short.MAX_VALUE)))
+                        .addComponent(global_depth, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                        .addComponent(clear1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(gd_input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BFR, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(clear2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bfr_input, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clear3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(user_input1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(userinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clear4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search_box_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,15 +325,15 @@ public class GUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(userinput, javax.swing.GroupLayout.PREFERRED_SIZE, 2046, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(userinput, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(952, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(userinput, javax.swing.GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(userinput, javax.swing.GroupLayout.PREFERRED_SIZE, 838, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(329, Short.MAX_VALUE))
         );
 
         pack();
@@ -244,10 +341,14 @@ public class GUI extends javax.swing.JFrame {
 
     boolean ok = false;
     
+   
+    
     private void InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertActionPerformed
         
    
            int value;
+           
+           
        if(b1 == false & !ok)
         {
             JOptionPane.showMessageDialog(null, "Enter BFR");
@@ -268,6 +369,8 @@ public class GUI extends javax.swing.JFrame {
         if(b1&d1 & (!ok))
         {
             d=new Directory(bfr,globaldepth);
+            gd_input.setEnabled(false);
+            BFR.setEnabled(false);
             ok = true;
             b1=false;
             d1=false;
@@ -276,7 +379,14 @@ public class GUI extends javax.swing.JFrame {
 
         try
         {
-                 value = Integer.parseInt(user_input.getText());
+                 value = Integer.parseInt(user_input1.getText());
+                 
+                 if(store.contains(value))
+                 {
+                     JOptionPane.showMessageDialog(null, "Key Discarded \n Key Already Present");
+                     return;
+                 }
+                 store.add(value);
                 d.insert(value);
 
 
@@ -320,26 +430,26 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InsertActionPerformed
 
-    private void user_inputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_user_inputFocusGained
+    private void search_box_textFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search_box_textFocusGained
         // TODO add your handling code here:
-        if(user_input.getText().equals("Enter Integer")){
-            user_input.setText(null);
-            user_input.setForeground(Color.BLACK);
+        if(search_box_text.getText().equals("Enter Integer")){
+            search_box_text.setText(null);
+            search_box_text.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_user_inputFocusGained
+    }//GEN-LAST:event_search_box_textFocusGained
 
-    private void user_inputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_user_inputFocusLost
+    private void search_box_textFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search_box_textFocusLost
         // TODO add your handling code here:
-        if(user_input.getText().equals("")){
-            user_input.setForeground(new Color(204,204,204));
-            user_input.setText("Enter Integer");
+        if(search_box_text.getText().equals("")){
+            search_box_text.setForeground(new Color(204,204,204));
+            search_box_text.setText("Enter Integer");
         }
-    }//GEN-LAST:event_user_inputFocusLost
+    }//GEN-LAST:event_search_box_textFocusLost
 
-    private void user_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user_inputActionPerformed
+    private void search_box_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_box_textActionPerformed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_user_inputActionPerformed
+    }//GEN-LAST:event_search_box_textActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         // TODO add your handling code here:
@@ -371,6 +481,77 @@ public class GUI extends javax.swing.JFrame {
         }
 //d = new Directory(val,gd);
     }//GEN-LAST:event_BFRActionPerformed
+
+    private void searchbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbuttonActionPerformed
+        // TODO add your handling code here:
+        
+        
+      int value_to_search;
+      
+          try
+        {
+            value_to_search = Integer.parseInt(search_box_text.getText());
+            if(search_box_text.getText() == "")
+            {
+                  JOptionPane.showMessageDialog(null, "Enter an integer");
+            return;
+            }
+        
+
+        }
+      catch( NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Enter an integer");
+            return;
+        }
+          
+        if(store.contains(value_to_search) == false)
+        {
+            JOptionPane.showMessageDialog(null, "NOT FOUND");
+            return;
+        }
+         JOptionPane.showMessageDialog(null, d.search(value_to_search));
+    }//GEN-LAST:event_searchbuttonActionPerformed
+
+    private void user_input1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_user_input1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_user_input1FocusGained
+
+    private void user_input1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_user_input1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_user_input1FocusLost
+
+    private void user_input1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user_input1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_user_input1ActionPerformed
+
+    private void clear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear1ActionPerformed
+        // TODO add your handling code here:
+        
+        global_depth.setText("");
+    }//GEN-LAST:event_clear1ActionPerformed
+
+    private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear2ActionPerformed
+        // TODO add your handling code here:
+        bfr_input.setText("");
+    }//GEN-LAST:event_clear2ActionPerformed
+
+    private void clear4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear4ActionPerformed
+        // TODO add your handling code here:
+        search_box_text.setText("");
+    }//GEN-LAST:event_clear4ActionPerformed
+
+    private void clear3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear3ActionPerformed
+        // TODO add your handling code here:
+        
+        user_input1.setText("");
+        
+    }//GEN-LAST:event_clear3ActionPerformed
+
+    private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new GUI().setVisible(true);
+    }//GEN-LAST:event_RestartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,14 +590,21 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BFR;
     private javax.swing.JButton Insert;
+    private javax.swing.JButton Restart;
     private javax.swing.JTextField bfr_input;
+    private javax.swing.JButton clear1;
+    private javax.swing.JButton clear2;
+    private javax.swing.JButton clear3;
+    private javax.swing.JButton clear4;
     private javax.swing.JButton gd_input;
     private javax.swing.JTextField global_depth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField search_box_text;
+    private javax.swing.JButton searchbutton;
     private javax.swing.JTable table;
-    private javax.swing.JTextField user_input;
+    private javax.swing.JTextField user_input1;
     private javax.swing.JPanel userinput;
     // End of variables declaration//GEN-END:variables
 }

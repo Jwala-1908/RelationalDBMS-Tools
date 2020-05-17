@@ -15,7 +15,7 @@ public class driver {
     { 
         // new directory with bucket size 3 and global depth 2
         
-         System.out.println(utility.hash(100));
+ 
 //       Directory d = new Directory(4,1);  
 //       d.insert(32);
 //       d.insert(28);
