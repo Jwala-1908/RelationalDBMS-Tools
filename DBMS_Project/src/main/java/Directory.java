@@ -15,6 +15,8 @@ public class Directory
         private final int bucketSize;
 	private int globalDepth;
         private final  ArrayList<Bucket> buckets;
+        private HashMap<Integer,Integer> freq = new HashMap();
+        
 
         
         /**
@@ -60,12 +62,21 @@ public class Directory
         {
 
             
+            System.out.println("Inserting " + value);
+            
              int key = BitUtility.getRightMostBits(value%k, this.globalDepth);
              
+              //System.out.println("key for "  + value + " is " + key);
              if(index.get(key) == -1)
              {
+                 
+                 //System.out.println("Value " + key +" pointer is not pointing to anything");
+                 
                  if(findbucket(key) == null)
                  {
+                     
+                     // System.out.println("Case 1");
+                      
                   Bucket b = new Bucket(bucketSize);
                     if(BitUtility.endsWith0(value%k))
                     {
@@ -84,17 +95,29 @@ public class Directory
                  }
                  else
                  {
-                     //System.out.println(value);
+                    // System.out.println("Case 2");
                              
             
                      Bucket b = findbucket(key);
-
+                     
+                     b.print();
           
                      if(b.arr.size() < bucketSize)
                      {
                          b.arr.add(value);
                          index.put(key,b.getID());
                      }
+                  else if(b.getLocalDepth() + 1 <= globalDepth)
+                   {
+
+                       split(b,value);
+                   }
+                   else
+                  {
+                    expand();
+                      split(b,value);
+                  }
+                     
                   
                  }
              }
@@ -116,18 +139,49 @@ public class Directory
                    }
                    else if(b.getLocalDepth() + 1 <= globalDepth)
                    {
-                       
+
                        split(b,value);
                         
                        
                    }
                    else
                    {
+                       
+//                      if(freq.containsKey(value))
+//                      {
+//                          if(freq.get(value)%k ==0)
+//                          {
+//                             // set or unset the bit after MSB
+//                              // then you have 2 buckets
+//                              // 10 is 1010 , so now put to 26 (11010)
+//                              // new GD will be 1 + ceil(log2(val))
+//                              // so make a new directory with this gd 
+//                              // and insert all the elements again
+//                             // and you are done
+//                              // point my directory to the new one now
+//                              
+//                              
+//                              
+//                              return ;
+//                          }
+//                          
+//                      }
                       expand();
                       split(b,value);
                        
                    }
              }
+             
+//             if(!freq.containsKey(val))
+//             {
+//                 freq.put(val,1);
+//             }
+//             else
+//             {
+//                 freq.put(val, freq.get(val) + 1);
+//             }
+//            
+             
              
              
         } 
@@ -151,7 +205,8 @@ public class Directory
          
          public void split(Bucket b,int value)
          {
-             
+            System.out.println("Spliting the directory while inserting " + value);
+            
             Bucket b1 = new Bucket(b);
          b.incDepth0();
          
@@ -301,21 +356,21 @@ public class Directory
                   
                   
                   
-//                System.out.println("Printing the Directory");
-//		System.out.println("Global Depth: " + this.globalDepth);
+                System.out.println("Printing the Directory");
+		System.out.println("Global Depth: " + this.globalDepth);
                 
                 int len = (int) Math.pow(2, this.globalDepth);
                 
                 for(int i = 0; i < len; i++)
                 {
-                   // System.out.print(i + "=[" );
+                    System.out.print(i + "=[" );
                      sb.append(String.valueOf(i)).append("=[");
                     if(index.get(i) !=-1)
                     {
                         sb.append(buckets.get(index.get(i)).print());
                         
                     }
-                   // System.out.println("]");
+                    System.out.println("]");
                     sb.append("]\n");
                 }
                 
