@@ -9,7 +9,6 @@
  * @author Radhesh Sarma
  */
 
-import java.io.*; 
 import java.util.*; 
 /**
  * Represents a bucket pointed at by an index in the Directory in Extendible Hashing.
@@ -18,8 +17,7 @@ import java.util.*;
 
 public class Bucket {
     
-    private int localDepth,bitPattern,remainingSize,numWords,startOfBuffer;
-    private Bucket nextBucket;
+    private int localDepth,bitPattern,remainingSize;
     
     
     private static int ID;
@@ -50,10 +48,7 @@ public class Bucket {
 		this.localDepth = newDepth;
 		this.bitPattern = 0;
 		this.remainingSize = capacity;
-		this.numWords = 0;
-		this.startOfBuffer = capacity;
-		this.nextBucket = null;
-                arr = new ArrayList<Integer>();
+                arr = new ArrayList<>();
 		this.id = Bucket.ID++;
 	}
         
@@ -66,8 +61,6 @@ public class Bucket {
 	{
 		this.localDepth = b.getLocalDepth();
 		this.bitPattern = b.getBitPattern();
-		this.numWords = 0;
-		this.nextBucket = null;
 		this.arr = b.arr;
 		this.id = Bucket.ID++;
 	}
@@ -159,15 +152,7 @@ public class Bucket {
 	 * @return Index of key if found. -1 otherwise.
 	 */
         
-        public int search(int key)
-        {
-               for(int i = 0; i < arr.size(); i++)
-               {
-                   if(arr.get(i) == key)return i;
-               }
-               
-            return -1;
-        }
+
         
         public void filter()
         {
@@ -189,16 +174,25 @@ public class Bucket {
         }
         
 
-        public void print()
+        public String print()
         {
-            System.out.print("Bucket id :" + this.id + " localdepth : " + this.localDepth + " Contents "); 
+             StringBuilder sb = new StringBuilder();
+            // sb.append("Bucket id :").append(this.id).append(" localdepth : ").append(this.localDepth).append(" Contents ");            
+            //System.out.print("Bucket id :" + this.id + " localdepth : " + this.localDepth + " Contents "); 
             for(int i = 0; i < arr.size(); i++)
             {
-                System.out.print(arr.get(i) + " ");
+              System.out.print(arr.get(i) + " ");
+                sb.append(arr.get(i)).append(" ");
             }
             
-            System.out.print("BitString " + getBitString() + " ");
+            //System.out.print("BitString " + getBitString() + " ");
+            String str;
+        str = sb.toString();
+                return str;
         }
+        
+        
+        
         
          public String getBitString()
         {
