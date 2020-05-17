@@ -16,7 +16,20 @@ public class driver {
         // new directory with bucket size 3 and global depth 2
         
  
-//       Directory d = new Directory(4,1);  
+       Directory d = new Directory(3,2);  
+       
+       
+       int[] input = new int[]{24,23,16,45,57,31,89};
+       
+       
+       
+       for(int i = 0; i <input.length; i++ )
+       {
+           d.insert(input[i]);
+       }
+       
+       
+       
 //       d.insert(32);
 //       d.insert(28);
 //       d.insert(43);
@@ -31,9 +44,10 @@ public class driver {
 //       d.insert(10);
 //   d.insert(10);
 //       d.insert(10);
-//       d.print();
-//       
-
        
+
+        d.print();
+
+
     }
 }

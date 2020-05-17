@@ -24,12 +24,14 @@ public class GUI extends javax.swing.JFrame {
     boolean b1=false,d1=false;
   HashSet<Integer> store = new HashSet<Integer>(); 
     public GUI() {
+        store.clear();
+        
         initComponents();
          //this.setExtendedState(MAXIMIZED_BOTH);
          setSize(1100,850);
          
        Object[] cname={"Directory Number","Bucket ID","Local Depth" ,"Content of Bucket pointed by it",};
-            DefaultTableModel model=new DefaultTableModel(cname,16);
+            DefaultTableModel model=new DefaultTableModel(cname,128);
             table.setModel(model);
              
             
@@ -550,6 +552,7 @@ public class GUI extends javax.swing.JFrame {
     private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
+       
         new GUI().setVisible(true);
     }//GEN-LAST:event_RestartActionPerformed
 
