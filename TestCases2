@@ -1,0 +1,198 @@
+TEST CASES:
+
+1. -/
+R
+A B C D E F G H I J
+5
+{A,B}->{C}
+{A,D}->{G,H}
+{B,D}->{E,F}
+{A}->{I}
+{H}->{J}
+
+2. -/
+R
+A B C D E
+3
+{A}->{B}
+{B}->{E}
+{C}->{D}
+
+3. -/
+R
+A B C D E
+2
+{A,B}->{C}
+{D}->{E}
+
+//
+ABCD
+A>B,C,D
+B,C>A,D
+D>B
+//
+4. -/
+R
+A B C D
+3
+{A}->{B,C,D}
+{B,C}->{A,D}
+{D}->{B}
+
+5. -/
+R
+A B C D E F
+3
+{A}->{B,C,D,E,F}
+{B,C}->{A,D,E,F}
+{D,E,F}->{A,B,C}
+
+6. -/
+R
+A B C D E
+3
+{A}->{B}
+{B,C}->{E}
+{D,E}->{A}
+
+7. ***************create new instance of FDs
+R
+A B C D E
+3
+{A,B}->{C,D}
+{D}->{A}
+{B,C}->{D,E}
+
+8. -/
+M
+W X Y Z
+3
+{Z}->{W}
+{Y}->{X,Z}
+{X,W}->{Y}
+
+9. -/
+R
+A B C D E F
+3
+{A,B}->{C}
+{D,C}->{A,E}
+{E}->{F}
+
+10. -/
+F
+V W X Y Z
+4
+{Z}->{Y}
+{Y}->{Z}
+{X}->{Y,V}
+{V,W}->{X}
+
+11.  **********************
+R
+A B C D E F
+5
+{A,B,C}->{D}
+{A,B,D}->{E}
+{C,D}->{F}
+{C,D,F}->{B}
+{B,F}->{D}
+
+12. -/
+R
+A B C D E F G H
+4
+{A,B}->{C}
+{A}->{D,E}
+{B}->{F}
+{F}->{G,H}
+
+13. -/
+R
+A B C D E
+3
+{C,E}->{D}
+{D}->{B}
+{C}->{A}
+
+14. -/
+R
+A B C D E F
+3
+{A,B}->{C}
+{D,C}->{A,E}
+{E}->{F}
+
+
+15. -/
+R
+A B C D E F G H I
+4
+{A,B}->{C}
+{B,D}->{E,F}
+{A,D}->{G,H}
+{A}->{I}
+
+16. **********************input same as 7th
+R
+A B C D E
+3
+{A,B}->{C,D}
+{D}->{A}
+{B,C}->{D,E}
+
+17. **********************
+R
+A B C D E
+2
+{B,C}->{A,D,E}
+{D}->{B}
+
+18. -/
+R
+A B C D E F G H I J
+5
+{A,B}->{C}
+{A}->{D,E}
+{B}->{F}
+{F}->{G,H}
+{D}->{I,J}
+
+19. -/
+R
+A B C D E
+3
+{A,B}->{C}
+{B}->{D}
+{D}->{E}
+
+20. ********************
+R
+A B C
+2
+{A,B}->{C}
+{C}->{A}
+
+21. **************see 2NF rules
+R
+A B C D E F
+3
+{A,B,C}->{D,E,F}
+{A,B}->{E,F}
+{A}->{B}
+
+22. -/
+R
+A B C D E F
+3
+{A,B,C}->{D,E,F}
+{A,B}->{E,F}
+{A}->{E}
+
+23. -/
+R
+A B C D E F
+3
+{A,B,C}->{D,E,F}
+{A,B}->{E,F}
+{A}->{E,F}
